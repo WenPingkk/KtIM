@@ -7,7 +7,7 @@ package com.wenping.autoloayout.ktim_project.contract
  */
 interface SplashContract {
 
-    interface Presentern : BasePresenter {
+    interface Presenter : BasePresenter {
         //检查是否登陆
         fun checkLoginStatus()
 
