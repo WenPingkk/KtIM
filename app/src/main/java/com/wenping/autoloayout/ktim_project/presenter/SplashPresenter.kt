@@ -1,5 +1,6 @@
 package com.wenping.autoloayout.ktim_project.presenter
 
+import com.hyphenate.chat.EMClient
 import com.wenping.autoloayout.ktim_project.contract.SplashContract
 
 /**
@@ -13,8 +14,7 @@ class SplashPresenter(val view: SplashContract.View) : SplashContract.Presenter 
         if (isLoginedIn()) view.onNotLoginedIn() else view.onNotLoginedIn()
     }
 
-    private fun isLoginedIn(): Boolean {
-        return false
-    }
+    //Moodel层 环信登场
+    private fun isLoginedIn(): Boolean = EMClient.getInstance().isConnected&&EMClient.getInstance().isLoggedInBefore
 
 }
