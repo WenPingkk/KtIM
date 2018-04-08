@@ -16,10 +16,11 @@ abstract class BaseFragment : Fragment() {
     /**
      * kotlin 语法
      */
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(getLayoutId(), null)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+            = inflater.inflate(getLayoutId(), null)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) =
-        init();
+        init()
 
     //初始化公共的功能，子类可以完成自己的初始化
     open fun init() {

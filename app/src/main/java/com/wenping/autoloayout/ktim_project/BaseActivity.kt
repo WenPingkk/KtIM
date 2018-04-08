@@ -14,15 +14,16 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(getLayoutId())
 
+        //初始化
         init()
 
     }
 
     /**
-     * 初始化公共的功能；子类可以复写这个方法
+     * 初始化公共的功能；
+     * 子类可以复写这个方法；用open来修饰
      */
-    open fun init() {
-    }
+    open fun init() {}
 
     //子类必须实现这个方法，并返回一个布局id
     abstract fun getLayoutId(): Int
