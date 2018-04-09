@@ -1,5 +1,7 @@
 package com.wenping.autoloayout.ktim_project.presenter
 
+import com.hyphenate.chat.EMClient
+import com.wenping.autoloayout.ktim_project.adapter.EMCallBackAdapter
 import com.wenping.autoloayout.ktim_project.contract.LoginContract
 import com.wenping.autoloayout.ktim_project.extentions.isValidPassword
 import com.wenping.autoloayout.ktim_project.extentions.isValidUserName
@@ -28,7 +30,25 @@ class LoginPresenter(val view: LoginContract.View) : LoginContract.Presenter {
     }
 
     private fun loginEaseMob(userName: String, password: String) {
+        EMClient.getInstance()
+                .login(userName,password,object : EMCallBackAdapter() {
+                    override fun onSuccess() {
+                        EMClient.getInstance().groupManager().loadAllGroups()
+                        EMClient.getInstance().chatManager().loadAllConversations()
 
+                        //在子线程中通知view层
+                        uiThread {
+                            view.onLoginedSuccess()
+                        }
+                    }
+
+                    override fun onError(p0: Int, p1: String?) {
+                        super.onError(p0, p1)
+                        uiThread {
+                            view.onLoginedFailed()
+                        }
+                    }
+                })
     }
 
 }
