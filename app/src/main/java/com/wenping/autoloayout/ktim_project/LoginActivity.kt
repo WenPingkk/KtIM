@@ -1,6 +1,7 @@
 package com.wenping.autoloayout.ktim_project
 
 import com.wenping.autoloayout.ktim_project.contract.LoginContract
+import com.wenping.autoloayout.ktim_project.presenter.LoginPresenter
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
@@ -12,6 +13,22 @@ import org.jetbrains.anko.toast
  */
 class LoginActivity :BaseActivity(),LoginContract.View{
 
+    val presenter = LoginPresenter(this)
+
+    override fun init() {
+        super.init()
+        login.setOnClickListener{ login() }
+        password.setOnEditorActionListener { v, actionId, event ->
+            login()
+            true
+        }
+    }
+
+    fun login() {
+        val userNameString = userName.text.trim().toString()
+        val passwordString = password.text.trim().toString()
+        presenter.login(userNameString,passwordString)
+    }
 
     override fun onUsserNameError() {
 
