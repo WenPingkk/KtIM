@@ -1,8 +1,10 @@
 package com.wenping.autoloayout.ktim_project
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.inputmethod.InputMethodManager
 
 /**
  * Author WenPing
@@ -13,6 +15,16 @@ abstract class BaseActivity : AppCompatActivity() {
 
     val progressDialog by lazy {
         ProgressDialog(this)
+    }
+
+    val inputMethdManager by lazy {
+        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    }
+
+    fun hideSoftKeyBoard() {
+        inputMethdManager.hideSoftInputFromWindow(
+                currentFocus.windowToken,0
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

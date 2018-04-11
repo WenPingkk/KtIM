@@ -1,5 +1,8 @@
 package com.wenping.autoloayout.ktim_project
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.support.v4.app.ActivityCompat
 import com.wenping.autoloayout.ktim_project.contract.LoginContract
 import com.wenping.autoloayout.ktim_project.presenter.LoginPresenter
 import kotlinx.android.synthetic.main.activity_login.*
@@ -25,9 +28,42 @@ class LoginActivity :BaseActivity(),LoginContract.View{
     }
 
     fun login() {
-        val userNameString = userName.text.trim().toString()
-        val passwordString = password.text.trim().toString()
-        presenter.login(userNameString,passwordString)
+
+        if (hasExternalWrittingPermission()) {
+            //隐藏软键盘
+            hideSoftKeyBoard()
+            val userNameString = userName.text.trim().toString()
+            val passwordString = password.text.trim().toString()
+            presenter.login(userNameString, passwordString)
+        } else {
+            applyWriteExternalStoragePermission()
+        }
+
+
+    }
+
+    private fun applyWriteExternalStoragePermission() {
+        val permissions = arrayOf(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+        ActivityCompat.requestPermissions(
+                this, permissions, 0)
+    }
+
+    //动态权限申请
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            //用户用户同意权限
+            login()
+        } else {
+            toast(R.string.permission_denied)
+        }
+    }
+
+    private fun hasExternalWrittingPermission(): Boolean {
+        val result = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        return result == PackageManager.PERMISSION_GRANTED
     }
 
     override fun onUsserNameError() {
