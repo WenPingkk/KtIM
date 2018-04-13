@@ -56,7 +56,7 @@ class RegisterActivity : BaseActivity() ,RegisterContract.View{
 
     override fun onRegisterSuccess() {
         dissProgressDialog()
-
+        toast(R.string.register_success)
         finish()
     }
 
