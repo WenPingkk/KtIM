@@ -25,7 +25,9 @@ interface RegisterContract {
 
         fun onRegisterSuccess()
 
-        fun onRegisterFailedO()
+        fun onRegisterFailed()
+
+        fun onUserExist()
 
     }
 
