@@ -1,4 +1,4 @@
-package com.wenping.autoloayout.ktim_project
+package com.wenping.autoloayout.ktim_project.ui.base
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

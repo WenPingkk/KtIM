@@ -1,8 +1,10 @@
-package com.wenping.autoloayout.ktim_project
+package com.wenping.autoloayout.ktim_project.ui.activity
 
 import android.Manifest
 import android.content.pm.PackageManager
 import android.support.v4.app.ActivityCompat
+import com.wenping.autoloayout.ktim_project.ui.base.BaseActivity
+import com.wenping.autoloayout.ktim_project.R
 import com.wenping.autoloayout.ktim_project.contract.LoginContract
 import com.wenping.autoloayout.ktim_project.presenter.LoginPresenter
 import kotlinx.android.synthetic.main.activity_login.*
@@ -14,7 +16,7 @@ import org.jetbrains.anko.toast
  * CreateTime 2018/4/8.
  * Description:
  */
-class LoginActivity :BaseActivity(),LoginContract.View{
+class LoginActivity : BaseActivity(),LoginContract.View{
 
     val presenter = LoginPresenter(this)
 

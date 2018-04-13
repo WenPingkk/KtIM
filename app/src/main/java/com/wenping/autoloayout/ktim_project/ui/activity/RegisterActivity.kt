@@ -1,5 +1,7 @@
-package com.wenping.autoloayout.ktim_project
+package com.wenping.autoloayout.ktim_project.ui.activity
 
+import com.wenping.autoloayout.ktim_project.ui.base.BaseActivity
+import com.wenping.autoloayout.ktim_project.R
 import com.wenping.autoloayout.ktim_project.contract.RegisterContract
 import com.wenping.autoloayout.ktim_project.presenter.RegisterPresenter
 import kotlinx.android.synthetic.main.activity_register.*

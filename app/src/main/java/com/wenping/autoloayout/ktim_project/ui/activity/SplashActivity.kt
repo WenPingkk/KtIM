@@ -1,6 +1,8 @@
-package com.wenping.autoloayout.ktim_project
+package com.wenping.autoloayout.ktim_project.ui.activity
 
 import android.os.Handler
+import com.wenping.autoloayout.ktim_project.ui.base.BaseActivity
+import com.wenping.autoloayout.ktim_project.R
 import com.wenping.autoloayout.ktim_project.contract.SplashContract
 import com.wenping.autoloayout.ktim_project.presenter.SplashPresenter
 import org.jetbrains.anko.startActivity
