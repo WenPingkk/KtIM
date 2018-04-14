@@ -4,16 +4,18 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.wenping.autoloayout.ktim_project.R
 import com.wenping.autoloayout.ktim_project.adapter.ContactListAdapter
+import com.wenping.autoloayout.ktim_project.contract.ContactContract
 import com.wenping.autoloayout.ktim_project.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import kotlinx.android.synthetic.main.header.*
+import org.jetbrains.anko.toast
 
 /**
  * Author WenPing
  * CreateTime 2018/4/13.
  * Description:
  */
-class ContactFragment : BaseFragment() {
+class ContactFragment : BaseFragment(),ContactContract.View {
     override fun getLayoutId(): Int = R.layout.fragment_contacts
 
     override fun init() {
@@ -35,6 +37,17 @@ class ContactFragment : BaseFragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = ContactListAdapter(context)
         }
-
     }
+
+    override fun onLoadContactsSuccess() {
+        swipeRefreshLayout.isRefreshing = false
+        recyclerView.adapter.notifyDataSetChanged()
+    }
+
+    override fun onLoadContactFailed() {
+        super.onLoadContactFailed()
+        swipeRefreshLayout.isRefreshing = false
+        context?.toast(R.string.load_contacts_failed)
+    }
+
 }
