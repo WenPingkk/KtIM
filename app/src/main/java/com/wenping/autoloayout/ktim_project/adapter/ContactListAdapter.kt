@@ -5,7 +5,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.wenping.autoloayout.ktim_project.data.ContactListItem
+import com.wenping.autoloayout.ktim_project.ui.activity.ChatActivity
 import com.wenping.autoloayout.ktim_project.widget.ContactListItemView
+import org.jetbrains.anko.startActivity
 
 /**
  * Author WenPing
@@ -24,6 +26,12 @@ class ContactListAdapter(val context: Context, val contactListItems: MutableList
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val contactListItemView = holder.itemView as ContactListItemView
         contactListItemView.bindView(contactListItems.get(position))
+        //数组的方式获取联系人
+        val userName = contactListItems[position].userName
+        contactListItemView.setOnClickListener {
+            context.startActivity<ChatActivity>("userName" to userName)
+        }
+
     }
     override fun getItemCount(): Int = contactListItems.size
 
