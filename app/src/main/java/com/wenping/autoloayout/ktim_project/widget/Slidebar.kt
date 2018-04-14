@@ -40,7 +40,7 @@ class Slidebar(context: Context, attrs: AttributeSet?=null) : View(context, attr
         //计算么个字符分配的高度
         sectionHeight = h*1.0f/ SECTIONS.size
         val fonrtMetric = paint.fontMetrics
-        //计算绘制文本的高度
+        //计算绘制文本的高度；以baseline处为基线，asent为负值，descent为正值
         val textHeight = fonrtMetric.descent-fonrtMetric.ascent
         //计算基准线
         textBaseLine = sectionHeight/2+(textHeight/2-fonrtMetric.descent)
