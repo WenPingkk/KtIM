@@ -5,6 +5,7 @@ import android.view.View
 import com.wenping.autoloayout.ktim_project.R
 import com.wenping.autoloayout.ktim_project.adapter.ContactListAdapter
 import com.wenping.autoloayout.ktim_project.contract.ContactContract
+import com.wenping.autoloayout.ktim_project.presenter.ContactPresenter
 import com.wenping.autoloayout.ktim_project.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import kotlinx.android.synthetic.main.header.*
@@ -15,8 +16,10 @@ import org.jetbrains.anko.toast
  * CreateTime 2018/4/13.
  * Description:
  */
-class ContactFragment : BaseFragment(),ContactContract.View {
+class ContactFragment : BaseFragment(), ContactContract.View {
     override fun getLayoutId(): Int = R.layout.fragment_contacts
+
+    val presenter = ContactPresenter(this)
 
     override fun init() {
         super.init()
@@ -29,6 +32,10 @@ class ContactFragment : BaseFragment(),ContactContract.View {
         swipeRefreshLayout.apply {
             setColorSchemeResources(R.color.qq_blue)
             isRefreshing = true
+            //监听
+            setOnRefreshListener {
+                presenter.loadContacts()
+            }
         }
 
         recyclerView.apply {
@@ -37,6 +44,7 @@ class ContactFragment : BaseFragment(),ContactContract.View {
             layoutManager = LinearLayoutManager(context)
             adapter = ContactListAdapter(context)
         }
+        presenter.loadContacts()
     }
 
     override fun onLoadContactsSuccess() {
