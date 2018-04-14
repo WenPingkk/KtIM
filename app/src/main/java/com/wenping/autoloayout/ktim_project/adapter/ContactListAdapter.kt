@@ -5,11 +5,14 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import com.hyphenate.chat.EMClient
 import com.wenping.autoloayout.ktim_project.R
 import com.wenping.autoloayout.ktim_project.data.ContactListItem
 import com.wenping.autoloayout.ktim_project.ui.activity.ChatActivity
 import com.wenping.autoloayout.ktim_project.widget.ContactListItemView
+import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 
 /**
  * Author WenPing
@@ -47,7 +50,19 @@ class ContactListAdapter(val context: Context, val contactListItems: MutableList
     }
 
     private fun deleteFriend(userName: String) {
+        EMClient.getInstance().contactManager().aysncDeleteContact(userName,object : EMCallBackAdapter() {
+            override fun onSuccess() {
+                super.onSuccess()
+                context.runOnUiThread {
+                    toast(R.string.delete_friend_success)
+                }
+            }
 
+            override fun onError(p0: Int, p1: String?) {
+                super.onError(p0, p1)
+                context.toast(R.string.delete_friend_failed)
+            }
+        })
     }
 
     override fun getItemCount(): Int = contactListItems.size
