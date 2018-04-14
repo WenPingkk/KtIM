@@ -13,11 +13,11 @@ import kotlinx.android.synthetic.main.view_contact_item.view.*
  * CreateTime 2018/4/14.
  * Description:
  */
-class ContactListItemView(context: Context?, attrs: AttributeSet?=null) : RelativeLayout(context, attrs) {
+class ContactListItemView(context: Context?, attrs: AttributeSet? = null) : RelativeLayout(context, attrs) {
 
     init {
         //布局创建把这个布局添加到组合式自定义布局
-        View.inflate(context, R.layout.view_contact_item,this)
+        View.inflate(context, R.layout.view_contact_item, this)
 
     }
 
@@ -25,7 +25,12 @@ class ContactListItemView(context: Context?, attrs: AttributeSet?=null) : Relati
      * 绑定方法
      */
     fun bindView(item: ContactListItem) {
-        firstLetter.text = item.firstLetter.toString()
+
+        if (item.showFirstLetter) {
+            firstLetter.visibility = View.VISIBLE
+            firstLetter.text = item.firstLetter.toString()
+        } else View.GONE
+
         userName.text = item.userName
     }
 }
