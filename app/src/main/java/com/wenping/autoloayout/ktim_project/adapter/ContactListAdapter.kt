@@ -1,9 +1,11 @@
 package com.wenping.autoloayout.ktim_project.adapter
 
+import android.app.AlertDialog
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import com.wenping.autoloayout.ktim_project.R
 import com.wenping.autoloayout.ktim_project.data.ContactListItem
 import com.wenping.autoloayout.ktim_project.ui.activity.ChatActivity
 import com.wenping.autoloayout.ktim_project.widget.ContactListItemView
@@ -31,8 +33,23 @@ class ContactListAdapter(val context: Context, val contactListItems: MutableList
         contactListItemView.setOnClickListener {
             context.startActivity<ChatActivity>("userName" to userName)
         }
+        contactListItemView.setOnLongClickListener {
+            val message = String.format(context.getString(R.string.delete_friend_message),userName)
+            AlertDialog.Builder(context)
+                    .setTitle(R.string.delete_friend_title)
+                    .setMessage(message)
+                    .setNegativeButton(R.string.cancel,null)
+                    .setPositiveButton(R.string.confirm) { dialog, which ->
+                        deleteFriend(userName)
+                    }.create()
+            true
+        }
+    }
+
+    private fun deleteFriend(userName: String) {
 
     }
+
     override fun getItemCount(): Int = contactListItems.size
 
     //创建viewholder
