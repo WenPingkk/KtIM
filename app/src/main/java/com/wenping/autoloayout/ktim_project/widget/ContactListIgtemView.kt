@@ -18,6 +18,7 @@ class ContactListIgtemView(context: Context?, attrs: AttributeSet?=null) : Relat
         View.inflate(context, R.layout.view_contact_item,this)
 
 
+
     }
 
 }
