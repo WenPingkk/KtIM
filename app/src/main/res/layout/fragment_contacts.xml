@@ -26,7 +26,6 @@
         <com.wenping.autoloayout.ktim_project.widget.Slidebar
             android:id="@+id/slideBar"
             android:layout_width="20dp"
-            android:background="#ff00"
             android:layout_height="match_parent"
             android:layout_gravity="right"/>
 

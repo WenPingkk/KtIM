@@ -2,8 +2,10 @@ package com.wenping.autoloayout.ktim_project.widget
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import com.wenping.autoloayout.ktim_project.R
 import org.jetbrains.anko.sp
@@ -57,6 +59,18 @@ class Slidebar(context: Context, attrs: AttributeSet?=null) : View(context, attr
             baseLine+=sectionHeight
         }
 
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        when (event.action) {
+            MotionEvent.ACTION_DOWN->{
+                setBackgroundResource(R.drawable.bg_slide_bar)
+            }
+            MotionEvent.ACTION_UP->{
+                setBackgroundColor(Color.TRANSPARENT)
+            }
+        }
+        return true
     }
 
     interface OnSectionChangeListener {
