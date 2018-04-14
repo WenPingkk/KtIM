@@ -2,8 +2,10 @@ package com.wenping.autoloayout.ktim_project.ui.fragment
 
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.hyphenate.chat.EMClient
 import com.wenping.autoloayout.ktim_project.R
 import com.wenping.autoloayout.ktim_project.adapter.ContactListAdapter
+import com.wenping.autoloayout.ktim_project.adapter.EMContactListenerAdapter
 import com.wenping.autoloayout.ktim_project.contract.ContactContract
 import com.wenping.autoloayout.ktim_project.presenter.ContactPresenter
 import com.wenping.autoloayout.ktim_project.ui.base.BaseFragment
@@ -46,6 +48,16 @@ class ContactFragment : BaseFragment(), ContactContract.View {
             adapter = ContactListAdapter(context,presenter.contactListItems)
 
         }
+
+        EMClient.getInstance().contactManager().setContactListener(object :EMContactListenerAdapter(){
+            override fun onContactDeleted(p0: String?) {
+                super.onContactDeleted(p0)
+                //重新获取联系人的数据
+
+                presenter.loadContacts()
+            }
+        })
+
         presenter.loadContacts()
     }
 
