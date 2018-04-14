@@ -42,7 +42,9 @@ class ContactFragment : BaseFragment(), ContactContract.View {
             //设置为true，recycerview内部会做一些优化
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
-            adapter = ContactListAdapter(context)
+
+            adapter = ContactListAdapter(context,presenter.contactListItems)
+
         }
         presenter.loadContacts()
     }

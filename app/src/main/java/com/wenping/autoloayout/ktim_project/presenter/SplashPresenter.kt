@@ -11,10 +11,11 @@ import com.wenping.autoloayout.ktim_project.contract.SplashContract
 class SplashPresenter(val view: SplashContract.View) : SplashContract.Presenter {
 
     override fun checkLoginStatus() {
-        if (isLoginedIn()) view.onNotLoginedIn() else view.onNotLoginedIn()
+        if (isLoginedIn())  view.onLoginedIn()else view.onNotLoginedIn()
     }
 
     //Moodel层 环信登场
-    private fun isLoginedIn(): Boolean = EMClient.getInstance().isConnected&&EMClient.getInstance().isLoggedInBefore
+    private fun isLoginedIn(): Boolean
+            = EMClient.getInstance().isConnected&&EMClient.getInstance().isLoggedInBefore
 
 }
