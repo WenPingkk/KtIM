@@ -12,7 +12,6 @@ import com.wenping.autoloayout.ktim_project.ui.base.BaseFragment
 import com.wenping.autoloayout.ktim_project.widget.Slidebar
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import kotlinx.android.synthetic.main.header.*
-import kotlinx.android.synthetic.main.view_contact_item.*
 import org.jetbrains.anko.toast
 
 /**
@@ -65,9 +64,9 @@ class ContactFragment : BaseFragment(), ContactContract.View {
             override fun onSectionChange(frstLetter: String) {
                 //显示绿色的背景
                 section.visibility = View.VISIBLE
-                section.text = firstLetter.toString()
+                section.text = frstLetter
 
-                recyclerView.smoothScrollToPosition(getPosition(firstLetter.toString()))
+//                recyclerView.smoothScrollToPosition(getPosition(frstLetter))
             }
 
             override fun onSlideFinish() {
@@ -84,6 +83,7 @@ class ContactFragment : BaseFragment(), ContactContract.View {
         presenter.contactListItems.binarySearch {
             contactListItem -> contactListItem.firstLetter.minus(firstLetter[0])
         }
+
 
     override fun onLoadContactsSuccess() {
         swipeRefreshLayout.isRefreshing = false

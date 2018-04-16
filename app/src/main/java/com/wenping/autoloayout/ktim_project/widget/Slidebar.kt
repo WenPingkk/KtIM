@@ -23,8 +23,6 @@ class Slidebar(context: Context, attrs: AttributeSet?=null) : View(context, attr
 
     var paint = Paint()
 
-    var onSectionChangeListenner :OnSectionChangeListener ?= null
-
     companion object {
         private val SECTIONS = arrayOf("A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
                 "K", "L","M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
@@ -71,7 +69,7 @@ class Slidebar(context: Context, attrs: AttributeSet?=null) : View(context, attr
             MotionEvent.ACTION_DOWN->{
                 setBackgroundResource(R.drawable.bg_slide_bar)
                 val index = getTouchIndex(event)
-                val firstLetter = SECTIONS[index].toString()
+                val firstLetter = SECTIONS[index]
                 onSectionChangeListener?.onSectionChange(firstLetter)
             }
             //抬手
