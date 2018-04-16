@@ -48,6 +48,8 @@ class Slidebar(context: Context, attrs: AttributeSet?=null) : View(context, attr
         textBaseLine = sectionHeight/2+(textHeight/2-fonrtMetric.descent)
     }
 
+
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         //绘制字符的起始位置
@@ -65,6 +67,9 @@ class Slidebar(context: Context, attrs: AttributeSet?=null) : View(context, attr
         when (event.action) {
             MotionEvent.ACTION_DOWN->{
                 setBackgroundResource(R.drawable.bg_slide_bar)
+                val index = getTouchIndex(event)
+                val firstLetter = SECTIONS[index]
+                println(firstLetter.toString())
             }
             MotionEvent.ACTION_UP->{
                 setBackgroundColor(Color.TRANSPARENT)
@@ -72,6 +77,22 @@ class Slidebar(context: Context, attrs: AttributeSet?=null) : View(context, attr
         }
         return true
     }
+
+    /**
+     * 获取到点击位置的下标
+     */
+
+    private fun getTouchIndex(event: MotionEvent): Int {
+        var index = (event.y / sectionHeight).toInt()
+        //做一个越界的异常的处理咯
+        if (index < 0) {
+            index = 0
+        } else if(index>= SECTIONS.size){
+            index = SECTIONS.size-1
+        }
+        return index
+    }
+
 
     interface OnSectionChangeListener {
 
