@@ -9,8 +9,10 @@ import com.wenping.autoloayout.ktim_project.adapter.EMContactListenerAdapter
 import com.wenping.autoloayout.ktim_project.contract.ContactContract
 import com.wenping.autoloayout.ktim_project.presenter.ContactPresenter
 import com.wenping.autoloayout.ktim_project.ui.base.BaseFragment
+import com.wenping.autoloayout.ktim_project.widget.Slidebar
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import kotlinx.android.synthetic.main.header.*
+import kotlinx.android.synthetic.main.view_contact_item.*
 import org.jetbrains.anko.toast
 
 /**
@@ -57,6 +59,22 @@ class ContactFragment : BaseFragment(), ContactContract.View {
                 presenter.loadContacts()
             }
         })
+
+        slideBar.onSectionChangeListener = object :Slidebar.OnSectionChangeListener{
+
+            override fun onSectionChange(frstLetter: String) {
+                //显示绿色的背景
+                section.visibility = View.VISIBLE
+                section.text = firstLetter.toString()
+            }
+
+            override fun onSlideFinish() {
+                //隐藏绿色背景的textView
+                section.visibility = View.GONE
+            }
+
+
+        }
 
         presenter.loadContacts()
     }
