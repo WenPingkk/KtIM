@@ -66,18 +66,24 @@ class ContactFragment : BaseFragment(), ContactContract.View {
                 //显示绿色的背景
                 section.visibility = View.VISIBLE
                 section.text = firstLetter.toString()
+
+                recyclerView.smoothScrollToPosition(getPosition(firstLetter.toString()))
             }
 
             override fun onSlideFinish() {
                 //隐藏绿色背景的textView
                 section.visibility = View.GONE
             }
-
-
         }
 
         presenter.loadContacts()
     }
+
+    private fun getPosition(firstLetter: String): Int =
+        //二分查找
+        presenter.contactListItems.binarySearch {
+            contactListItem -> contactListItem.firstLetter.minus(firstLetter[0])
+        }
 
     override fun onLoadContactsSuccess() {
         swipeRefreshLayout.isRefreshing = false

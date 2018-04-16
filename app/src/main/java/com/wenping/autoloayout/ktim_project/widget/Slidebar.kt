@@ -71,7 +71,7 @@ class Slidebar(context: Context, attrs: AttributeSet?=null) : View(context, attr
             MotionEvent.ACTION_DOWN->{
                 setBackgroundResource(R.drawable.bg_slide_bar)
                 val index = getTouchIndex(event)
-                val firstLetter = SECTIONS[index]
+                val firstLetter = SECTIONS[index].toString()
                 onSectionChangeListener?.onSectionChange(firstLetter)
             }
             //抬手
