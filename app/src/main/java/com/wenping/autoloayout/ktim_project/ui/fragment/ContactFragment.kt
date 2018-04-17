@@ -61,12 +61,12 @@ class ContactFragment : BaseFragment(), ContactContract.View {
 
         slideBar.onSectionChangeListener = object :Slidebar.OnSectionChangeListener{
 
-            override fun onSectionChange(frstLetter: String) {
+            override fun onSectionChange(firstLetter: String) {
                 //显示绿色的背景
                 section.visibility = View.VISIBLE
-                section.text = frstLetter
+                section.text = firstLetter
 
-//                recyclerView.smoothScrollToPosition(getPosition(frstLetter))
+//                recyclerView.smoothScrollToPosition(getPosition(firstLetter))
             }
 
             override fun onSlideFinish() {
