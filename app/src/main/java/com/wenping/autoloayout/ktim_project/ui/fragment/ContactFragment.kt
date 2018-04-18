@@ -72,7 +72,7 @@ class ContactFragment : BaseFragment(), ContactContract.View {
                 section.visibility = View.VISIBLE
                 section.text = firstLetter
 
-                recyclerView.smoothScrollToPosition(getPosition(firstLetter))
+//                recyclerView.smoothScrollToPosition(getPosition(firstLetter))
             }
 
             override fun onSlideFinish() {
