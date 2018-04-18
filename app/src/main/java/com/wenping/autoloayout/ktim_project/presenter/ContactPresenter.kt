@@ -4,6 +4,8 @@ import com.hyphenate.chat.EMClient
 import com.hyphenate.exceptions.HyphenateException
 import com.wenping.autoloayout.ktim_project.contract.ContactContract
 import com.wenping.autoloayout.ktim_project.data.ContactListItem
+import com.wenping.autoloayout.ktim_project.data.db.Contact
+import com.wenping.autoloayout.ktim_project.data.db.IMDatabase
 import org.jetbrains.anko.doAsync
 
 /**
@@ -19,6 +21,8 @@ class ContactPresenter(val view: ContactContract.View) : ContactContract.Contact
     override fun loadContacts() {
         doAsync {
             contactListItems.clear()
+            //本地先删除数据中的所有数据
+            IMDatabase.instance.deleteAllContacts()
             try {
                 //先清空数据，再去获取，防止数据冗余
                 val userName = EMClient.getInstance().contactManager().allContactsFromServer
@@ -29,6 +33,9 @@ class ContactPresenter(val view: ContactContract.View) : ContactContract.Contact
                     val showFirstLetter = index == 0 || s[0] != userName[index - 1][0]
                     val contactListItem = ContactListItem(s, s[0].toUpperCase(), showFirstLetter)
                     contactListItems.add(contactListItem)
+
+                    val contact = Contact(mutableMapOf("name" to s))
+                    IMDatabase.instance.saveContact(contact)
                 }
 
                 uiThread {

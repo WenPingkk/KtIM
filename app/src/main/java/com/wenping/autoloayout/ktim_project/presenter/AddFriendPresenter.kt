@@ -8,6 +8,7 @@ import cn.bmob.v3.listener.FindListener
 import com.hyphenate.chat.EMClient
 import com.wenping.autoloayout.ktim_project.contract.AddFriendContract
 import com.wenping.autoloayout.ktim_project.data.AddFriendItem
+import com.wenping.autoloayout.ktim_project.data.db.IMDatabase
 import org.jetbrains.anko.doAsync
 
 /**
@@ -27,24 +28,30 @@ class AddFriendPresenter(var view: AddFriendContract.View) : AddFriendContract.P
                 .addWhereNotEqualTo("username", EMClient.getInstance().currentUser)
         query.findObjects(object : FindListener<BmobUser>() {
             override fun done(p0: MutableList<BmobUser>?, p1: BmobException?) {
-                if (p1 == null){
+                if (p1 == null) {
                     //处理数据
                     //创建AddFriendItem的集合
 
-                    doAsync {
 
+                    val allContacts = IMDatabase.instance.getAllContacts()
+                    doAsync {
                         p0?.forEach {
-                            val addFriendItem = AddFriendItem(it.username,it.createdAt)
+                            addFriendItems.clear()
+
+                            var isAdded = false
+                            for (contact in allContacts) {
+                                if (contact.name == it.username)
+                                    isAdded = true
+                            }
+
+                            val addFriendItem = AddFriendItem(it.username, it.createdAt,isAdded)
                             addFriendItems.add(addFriendItem)
                         }
-
                         uiThread {
                             view.onSeachSuccess()
                         }
-
                     }
-                }
-                else view.onSeachFailed()
+                } else view.onSeachFailed()
             }
         })
 

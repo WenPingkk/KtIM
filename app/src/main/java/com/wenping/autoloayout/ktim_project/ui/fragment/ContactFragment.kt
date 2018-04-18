@@ -60,9 +60,15 @@ class ContactFragment : BaseFragment(), ContactContract.View {
             override fun onContactDeleted(p0: String?) {
                 super.onContactDeleted(p0)
                 //重新获取联系人的数据
-
                 presenter.loadContacts()
             }
+
+            override fun onContactAdded(p0: String?) {
+                super.onContactAdded(p0)
+                //联系人添加后的回调
+                presenter.loadContacts()
+            }
+
         })
 
         slideBar.onSectionChangeListener = object :Slidebar.OnSectionChangeListener{
