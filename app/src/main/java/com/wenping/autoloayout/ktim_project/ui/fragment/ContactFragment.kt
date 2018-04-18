@@ -8,10 +8,12 @@ import com.wenping.autoloayout.ktim_project.adapter.ContactListAdapter
 import com.wenping.autoloayout.ktim_project.adapter.EMContactListenerAdapter
 import com.wenping.autoloayout.ktim_project.contract.ContactContract
 import com.wenping.autoloayout.ktim_project.presenter.ContactPresenter
+import com.wenping.autoloayout.ktim_project.ui.activity.AddFriendsActivity
 import com.wenping.autoloayout.ktim_project.ui.base.BaseFragment
 import com.wenping.autoloayout.ktim_project.widget.Slidebar
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import kotlinx.android.synthetic.main.header.*
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 /**
@@ -28,6 +30,10 @@ class ContactFragment : BaseFragment(), ContactContract.View {
         super.init()
         headerTitle.text = getString(R.string.contact)
         add.visibility = View.VISIBLE
+        add.setOnClickListener{
+            context?.startActivity<AddFriendsActivity>()
+        }
+
 
         /**
          * apply的方法
@@ -66,7 +72,7 @@ class ContactFragment : BaseFragment(), ContactContract.View {
                 section.visibility = View.VISIBLE
                 section.text = firstLetter
 
-//                recyclerView.smoothScrollToPosition(getPosition(firstLetter))
+                recyclerView.smoothScrollToPosition(getPosition(firstLetter))
             }
 
             override fun onSlideFinish() {
