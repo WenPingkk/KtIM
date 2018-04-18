@@ -1,8 +1,6 @@
 package com.wenping.autoloayout.ktim_project.ui.activity
 
 import android.support.v7.widget.LinearLayoutManager
-import android.view.KeyEvent
-import android.widget.TextView
 import com.wenping.autoloayout.ktim_project.R
 import com.wenping.autoloayout.ktim_project.adapter.AddFriendListFriendAdapter
 import com.wenping.autoloayout.ktim_project.contract.AddFriendContract
@@ -32,7 +30,7 @@ class AddFriendsActivity : BaseActivity() ,AddFriendContract.View{
 
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
-            adapter = AddFriendListFriendAdapter(context)
+            adapter = AddFriendListFriendAdapter(context,presenter.addFriendItems)
 
         }
 

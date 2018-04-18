@@ -26,8 +26,8 @@ class GlobalApplication : Application() {
         //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
         EMClient.getInstance().setDebugMode(BuildConfig.DEBUG)
 
-        Bmob.initialize(applicationContext, "df5a02bd4c7875549784ceb033407cc4")
-//        Bmob.initialize(applicationContext, "ef808b3b36ee22248d19f04287ce5b37")
+//        Bmob.initialize(applicationContext, "df5a02bd4c7875549784ceb033407cc4")
+        Bmob.initialize(applicationContext, "ef808b3b36ee22248d19f04287ce5b37")
     }
 
 }
