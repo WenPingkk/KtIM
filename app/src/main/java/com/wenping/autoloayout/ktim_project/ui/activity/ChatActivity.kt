@@ -1,7 +1,16 @@
 package com.wenping.autoloayout.ktim_project.ui.activity
 
+import android.support.v7.widget.LinearLayoutManager
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.KeyEvent
+import android.view.View
+import android.widget.EditText
+import android.widget.TextView
 import com.wenping.autoloayout.ktim_project.R
 import com.wenping.autoloayout.ktim_project.ui.base.BaseActivity
+import kotlinx.android.synthetic.main.activity_chat.*
+import kotlinx.android.synthetic.main.header.*
 
 /**
  * Author WenPing
@@ -11,4 +20,60 @@ import com.wenping.autoloayout.ktim_project.ui.base.BaseActivity
 class ChatActivity : BaseActivity() {
 
     override fun getLayoutId(): Int = R.layout.activity_chat
+
+    lateinit var userName :String
+
+    override fun init() {
+        super.init()
+        initHeader()
+
+        initEditText()
+
+        initRecyclerView()
+    }
+
+    private fun initRecyclerView() {
+        recyclerView.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+
+
+
+        }
+    }
+
+    private fun initEditText() {
+        edit.addTextChangedListener(object: TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+                send.isEnabled = !s.isNullOrEmpty()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+        edit.setOnEditorActionListener { v, actionId, event ->
+            send()
+            true
+        }
+    }
+
+    fun send() {
+
+    }
+
+    private fun initHeader() {
+       back.visibility = View.VISIBLE
+        back.setOnClickListener{finish()}
+
+        //获取聊天用户名
+        userName = intent.getStringExtra("username")
+
+        val titleString = String.format(getString(R.string.chat_title),userName)
+
+        headerTitle.text = titleString
+
+    }
 }

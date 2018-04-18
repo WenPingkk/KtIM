@@ -26,18 +26,66 @@ class ContactFragment : BaseFragment(), ContactContract.View {
 
     val presenter = ContactPresenter(this)
 
-    override fun init() {
-        super.init()
-        headerTitle.text = getString(R.string.contact)
-        add.visibility = View.VISIBLE
-        add.setOnClickListener{
-            context?.startActivity<AddFriendsActivity>()
+    val listener = object :EMContactListenerAdapter(){
+        override fun onContactDeleted(p0: String?) {
+            super.onContactDeleted(p0)
+            //重新获取联系人的数据
+            presenter.loadContacts()
         }
 
+        override fun onContactAdded(p0: String?) {
+            super.onContactAdded(p0)
+            //联系人添加后的回调
+            presenter.loadContacts()
+        }
+    }
 
+    override fun init() {
+        super.init()
+        initHeader()
         /**
          * apply的方法
          */
+        initSwipRefreshLayout()
+
+        initRecyclerview()
+
+        EMClient.getInstance().contactManager().setContactListener(listener)
+
+        initSlideBar()
+
+        presenter.loadContacts()
+    }
+
+    private fun initSlideBar() {
+        slideBar.onSectionChangeListener = object : Slidebar.OnSectionChangeListener {
+
+            override fun onSectionChange(firstLetter: String) {
+                //显示绿色的背景
+                section.visibility = View.VISIBLE
+                section.text = firstLetter
+//                    recyclerView.smoothScrollToPosition(getPosition(firstLetter))
+            }
+
+            override fun onSlideFinish() {
+                //隐藏绿色背景的textView
+                section.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun initRecyclerview() {
+        recyclerView.apply {
+            //设置为true，recycerview内部会做一些优化
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+
+            adapter = ContactListAdapter(context, presenter.contactListItems)
+
+        }
+    }
+
+    private fun initSwipRefreshLayout() {
         swipeRefreshLayout.apply {
             setColorSchemeResources(R.color.qq_blue)
             isRefreshing = true
@@ -46,48 +94,14 @@ class ContactFragment : BaseFragment(), ContactContract.View {
                 presenter.loadContacts()
             }
         }
+    }
 
-        recyclerView.apply {
-            //设置为true，recycerview内部会做一些优化
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context)
-
-            adapter = ContactListAdapter(context,presenter.contactListItems)
-
+    private fun initHeader() {
+        headerTitle.text = getString(R.string.contact)
+        add.visibility = View.VISIBLE
+        add.setOnClickListener {
+            context?.startActivity<AddFriendsActivity>()
         }
-
-        EMClient.getInstance().contactManager().setContactListener(object :EMContactListenerAdapter(){
-            override fun onContactDeleted(p0: String?) {
-                super.onContactDeleted(p0)
-                //重新获取联系人的数据
-                presenter.loadContacts()
-            }
-
-            override fun onContactAdded(p0: String?) {
-                super.onContactAdded(p0)
-                //联系人添加后的回调
-                presenter.loadContacts()
-            }
-
-        })
-
-        slideBar.onSectionChangeListener = object :Slidebar.OnSectionChangeListener{
-
-            override fun onSectionChange(firstLetter: String) {
-                //显示绿色的背景
-                section.visibility = View.VISIBLE
-                section.text = firstLetter
-
-//                recyclerView.smoothScrollToPosition(getPosition(firstLetter))
-            }
-
-            override fun onSlideFinish() {
-                //隐藏绿色背景的textView
-                section.visibility = View.GONE
-            }
-        }
-
-        presenter.loadContacts()
     }
 
     private fun getPosition(firstLetter: String): Int =
@@ -107,5 +121,4 @@ class ContactFragment : BaseFragment(), ContactContract.View {
         swipeRefreshLayout.isRefreshing = false
         context?.toast(R.string.load_contacts_failed)
     }
-
 }

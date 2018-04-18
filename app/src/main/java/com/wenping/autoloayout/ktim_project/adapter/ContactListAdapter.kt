@@ -34,7 +34,7 @@ class ContactListAdapter(val context: Context, val contactListItems: MutableList
         //数组的方式获取联系人
         val userName = contactListItems[position].userName
         contactListItemView.setOnClickListener {
-            context.startActivity<ChatActivity>("userName" to userName)
+            context.startActivity<ChatActivity>("username" to userName)
         }
         contactListItemView.setOnLongClickListener {
             val message = String.format(context.getString(R.string.delete_friend_message),userName)
