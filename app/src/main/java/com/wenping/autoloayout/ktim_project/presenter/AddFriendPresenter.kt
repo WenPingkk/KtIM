@@ -32,19 +32,17 @@ class AddFriendPresenter(var view: AddFriendContract.View) : AddFriendContract.P
                     //处理数据
                     //创建AddFriendItem的集合
 
-
                     val allContacts = IMDatabase.instance.getAllContacts()
+                    addFriendItems.clear()
                     doAsync {
                         p0?.forEach {
-                            addFriendItems.clear()
-
                             var isAdded = false
                             for (contact in allContacts) {
                                 if (contact.name == it.username)
                                     isAdded = true
                             }
 
-                            val addFriendItem = AddFriendItem(it.username, it.createdAt,isAdded)
+                            val addFriendItem = AddFriendItem(it.username, it.createdAt, isAdded)
                             addFriendItems.add(addFriendItem)
                         }
                         uiThread {
