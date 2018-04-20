@@ -18,7 +18,6 @@ class ContactListItemView(context: Context?, attrs: AttributeSet? = null) : Rela
     init {
         //布局创建把这个布局添加到组合式自定义布局
         View.inflate(context, R.layout.view_contact_item, this)
-
     }
 
     /**

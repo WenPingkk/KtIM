@@ -2,6 +2,7 @@ package com.wenping.autoloayout.ktim_project.presenter
 
 import com.hyphenate.chat.EMClient
 import com.wenping.autoloayout.ktim_project.contract.SplashContract
+import com.wenping.autoloayout.ktim_project.ui.activity.SplashActivity
 
 /**
  * Author WenPing

@@ -12,6 +12,7 @@ interface SplashContract {
         fun checkLoginStatus()
 
     }
+
     interface View{
         //没登录
         fun onNotLoginedIn()

@@ -44,7 +44,7 @@ class ContactListAdapter(val context: Context, val contactListItems: MutableList
                     .setNegativeButton(R.string.cancel,null)
                     .setPositiveButton(R.string.confirm) { dialog, which ->
                         deleteFriend(userName)
-                    }.create()
+                    }.create().show()
             true
         }
     }
