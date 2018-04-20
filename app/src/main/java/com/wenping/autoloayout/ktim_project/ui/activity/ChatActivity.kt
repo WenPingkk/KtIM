@@ -8,16 +8,19 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import com.wenping.autoloayout.ktim_project.R
+import com.wenping.autoloayout.ktim_project.contract.ChatContract
 import com.wenping.autoloayout.ktim_project.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.header.*
+import org.jetbrains.anko.toast
 
 /**
  * Author WenPing
  * CreateTime 2018/4/14.
  * Description:
  */
-class ChatActivity : BaseActivity() {
+class ChatActivity : BaseActivity() ,ChatContract.View{
+
 
     override fun getLayoutId(): Int = R.layout.activity_chat
 
@@ -76,4 +79,21 @@ class ChatActivity : BaseActivity() {
         headerTitle.text = titleString
 
     }
+
+    override fun onStartSendMessage() {
+        recyclerView.adapter.notifyDataSetChanged()
+    }
+
+    override fun onSendMessageSuccess() {
+        recyclerView.adapter.notifyDataSetChanged()
+        toast(R.string.send_message_success)
+        //清空 编辑框
+        edit.text.clear()
+    }
+
+    override fun onSendMessageFailed() {
+        toast(R.string.send_message_failed)
+        recyclerView.adapter.notifyDataSetChanged()
+    }
+
 }
