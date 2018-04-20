@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import com.wenping.autoloayout.ktim_project.R
+import com.wenping.autoloayout.ktim_project.adapter.MessageListAdapter
 import com.wenping.autoloayout.ktim_project.contract.ChatContract
 import com.wenping.autoloayout.ktim_project.presenter.ChatPresenter
 import com.wenping.autoloayout.ktim_project.ui.base.BaseActivity
@@ -47,7 +48,7 @@ class ChatActivity : BaseActivity() ,ChatContract.View{
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
 
-
+            adapter = MessageListAdapter(context,)
 
         }
     }

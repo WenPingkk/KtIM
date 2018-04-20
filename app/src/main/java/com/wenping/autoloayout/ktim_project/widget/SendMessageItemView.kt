@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.RelativeLayout
+import com.hyphenate.chat.EMMessage
 import com.wenping.autoloayout.ktim_project.R
 
 /**
@@ -12,7 +13,10 @@ import com.wenping.autoloayout.ktim_project.R
  * @decription:
  *<p>
  */
-class SendMessageItemView(context: Context?, attrs: AttributeSet?) : RelativeLayout(context, attrs) {
+class SendMessageItemView(context: Context?, attrs: AttributeSet? = null) : RelativeLayout(context, attrs) {
+    fun bindView(emMessage: EMMessage, showTimeStamp: Boolean) {
+
+    }
 
     init {
 
