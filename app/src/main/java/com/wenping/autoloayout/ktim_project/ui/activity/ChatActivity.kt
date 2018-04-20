@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import com.wenping.autoloayout.ktim_project.R
 import com.wenping.autoloayout.ktim_project.contract.ChatContract
+import com.wenping.autoloayout.ktim_project.presenter.ChatPresenter
 import com.wenping.autoloayout.ktim_project.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.header.*
@@ -26,6 +27,8 @@ class ChatActivity : BaseActivity() ,ChatContract.View{
 
     lateinit var userName :String
 
+    val presenter by lazy { ChatPresenter(this) }
+
     override fun init() {
         super.init()
         initHeader()
@@ -33,7 +36,11 @@ class ChatActivity : BaseActivity() ,ChatContract.View{
         initEditText()
 
         initRecyclerView()
+
+        send.setOnClickListener{send()}
     }
+
+
 
     private fun initRecyclerView() {
         recyclerView.apply {
@@ -64,7 +71,9 @@ class ChatActivity : BaseActivity() ,ChatContract.View{
     }
 
     fun send() {
-
+        hideSoftKeyBoard()
+        val message = edit.text.trim().toString()
+        presenter.sendMessage(userName,message)
     }
 
     private fun initHeader() {
