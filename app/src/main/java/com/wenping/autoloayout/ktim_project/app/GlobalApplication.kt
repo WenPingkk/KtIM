@@ -54,20 +54,19 @@ class GlobalApplication : Application() {
             }
         }
     }
-
     private fun showNotification(p0: MutableList<EMMessage>?) {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         p0?.forEach {
             var contentText = getString(R.string.no_text_message)
-            if (it.type == EMMessage.Type.TXT) {
+            if (it.type == EMMessage.Type.TXT){
                 contentText = (it.body as EMTextMessageBody).message
             }
-            val intent = Intent(this,ChatActivity::class.java)
-            intent.putExtra("username",it.conversationId())
+            val intent = Intent(this, ChatActivity::class.java)
+            intent.putExtra("username", it.conversationId())
+//            val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
             val taskStackBuilder = TaskStackBuilder.create(this).addParentStack(ChatActivity::class.java).addNextIntent(intent)
-            val pendingIntent = taskStackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT)
-
+            val pendingIntent = taskStackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
             val notification = Notification.Builder(this)
                     .setContentTitle(getString(R.string.receive_new_message))
                     .setContentText(contentText)
@@ -76,9 +75,32 @@ class GlobalApplication : Application() {
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true)
                     .notification
-            notificationManager.notify(1,notification)
+            notificationManager.notify(1, notification)
         }
     }
+//    private fun showNotification(p0: MutableList<EMMessage>?) {
+//        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//        p0?.forEach {
+//            var contentText = getString(R.string.no_text_message)
+//            if (it.type == EMMessage.Type.TXT) {
+//                contentText = (it.body as EMTextMessageBody).message
+//            }
+//            val intent = Intent(this,ChatActivity::class.java)
+//            intent.putExtra("username",it.conversationId())
+//
+//            val taskStackBuilder = TaskStackBuilder.create(this).addParentStack(ChatActivity::class.java).addNextIntent(intent)
+//            val pendingIntent = taskStackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT)
+//            val notification = Notification.Builder(this)
+//                    .setContentTitle(getString(R.string.receive_new_message))
+//                    .setContentText(contentText)
+//                    .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.avatar1))
+//                    .setSmallIcon(R.mipmap.ic_contact)
+//                    .setContentIntent(pendingIntent)
+//                    .setAutoCancel(true)
+//                    .notification
+//            notificationManager.notify(1,notification)
+//        }
+//    }
 
 
     /**
