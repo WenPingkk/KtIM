@@ -14,6 +14,7 @@ interface ChatContract {
         fun sendMessage(contact:String,message:String)
         fun addMessage(userName: String, p0: MutableList<EMMessage>?)
         fun loadMessages(userName: String)
+        fun loadMoreMessages(userName: String)
     }
 
     interface View {
@@ -21,6 +22,7 @@ interface ChatContract {
         fun onSendMessageSuccess()
         fun onSendMessageFailed()
         fun onMessageLoaded()
+        fun onMoreMessageLoaded(size: Int)
 
     }
 }

@@ -12,21 +12,23 @@ import org.jetbrains.anko.doAsync
  * @decription:
  *<p>
  */
-class ChatPresenter(val view:ChatContract.View) :ChatContract.ChatPresenter{
+class ChatPresenter(val view: ChatContract.View) : ChatContract.ChatPresenter {
 
     val messages = mutableListOf<EMMessage>()
-
+    companion object {
+        val PAGE_SIZE = 10
+    }
     override fun sendMessage(contact: String, message: String) {
 
-        val emMessage = EMMessage.createTxtSendMessage(message,contact)
-        emMessage.setMessageStatusCallback(object :EMCallBackAdapter(){
+        val emMessage = EMMessage.createTxtSendMessage(message, contact)
+        emMessage.setMessageStatusCallback(object : EMCallBackAdapter() {
             override fun onSuccess() {
                 //这是在子线程中
-               uiThread {  view.onSendMessageSuccess() }
+                uiThread { view.onSendMessageSuccess() }
             }
 
             override fun onError(p0: Int, p1: String?) {
-                uiThread {  view.onSendMessageFailed() }
+                uiThread { view.onSendMessageFailed() }
             }
         })
         messages.add(emMessage)
@@ -52,6 +54,18 @@ class ChatPresenter(val view:ChatContract.View) :ChatContract.ChatPresenter{
             messages.addAll(conversation.allMessages)
             uiThread {
                 view.onMessageLoaded()
+            }
+        }
+    }
+
+    override fun loadMoreMessages(userName: String) {
+        doAsync {
+            val conversation = EMClient.getInstance().chatManager().getConversation(userName)
+            val startMsgId = messages[0].msgId
+            val loadMoreMsgFromDB = conversation.loadMoreMsgFromDB(startMsgId, PAGE_SIZE)
+            messages.addAll(0,loadMoreMsgFromDB)
+            uiThread {
+                view.onMoreMessageLoaded(loadMoreMsgFromDB.size)
             }
         }
     }

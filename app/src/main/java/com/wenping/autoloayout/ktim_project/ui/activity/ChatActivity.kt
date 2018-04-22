@@ -1,6 +1,7 @@
 package com.wenping.autoloayout.ktim_project.ui.activity
 
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -22,6 +23,7 @@ import org.jetbrains.anko.toast
  * Description:
  */
 class ChatActivity : BaseActivity() ,ChatContract.View{
+
     override fun getLayoutId(): Int = R.layout.activity_chat
 
     lateinit var userName :String
@@ -59,7 +61,18 @@ class ChatActivity : BaseActivity() ,ChatContract.View{
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
             adapter = MessageListAdapter(context,presenter.messages)
-
+            addOnScrollListener(object :RecyclerView.OnScrollListener(){
+                override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                    //当recyclerview是一个空闲的状态
+                    //检查是否滑动到顶部，要加载更多数据
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        val linearLayoutManager = layoutManager as LinearLayoutManager
+                        if (linearLayoutManager.findFirstVisibleItemPosition() == 0) {
+                            presenter.loadMoreMessages(userName)
+                        }
+                    }
+                }
+            })
         }
     }
 
@@ -130,4 +143,11 @@ class ChatActivity : BaseActivity() ,ChatContract.View{
         recyclerView.adapter.notifyDataSetChanged()
         scrollToBottom()
     }
+
+    override fun onMoreMessageLoaded(size: Int) {
+        recyclerView.adapter.notifyDataSetChanged()
+        recyclerView.scrollToPosition(size)
+    }
+
+
 }
