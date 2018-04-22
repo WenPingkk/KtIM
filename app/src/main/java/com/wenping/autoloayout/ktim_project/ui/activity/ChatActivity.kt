@@ -35,6 +35,7 @@ class ChatActivity : BaseActivity() ,ChatContract.View{
             presenter.addMessage(userName,p0)
             runOnUiThread {
                 recyclerView.adapter.notifyDataSetChanged()
+                scrollToBottom()
             }
         }
 
@@ -108,6 +109,11 @@ class ChatActivity : BaseActivity() ,ChatContract.View{
         toast(R.string.send_message_success)
         //清空 编辑框
         edit.text.clear()
+        scrollToBottom()
+    }
+
+    private fun scrollToBottom() {
+        recyclerView.scrollToPosition(presenter.messages.size-1)
     }
 
     override fun onSendMessageFailed() {
