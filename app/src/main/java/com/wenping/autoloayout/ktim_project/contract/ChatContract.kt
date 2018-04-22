@@ -13,12 +13,14 @@ interface ChatContract {
     interface ChatPresenter : BasePresenter {
         fun sendMessage(contact:String,message:String)
         fun addMessage(userName: String, p0: MutableList<EMMessage>?)
+        fun loadMessages(userName: String)
     }
 
     interface View {
         fun onStartSendMessage()
         fun onSendMessageSuccess()
         fun onSendMessageFailed()
+        fun onMessageLoaded()
 
     }
 }

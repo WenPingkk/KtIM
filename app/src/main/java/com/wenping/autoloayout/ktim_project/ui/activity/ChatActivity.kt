@@ -22,8 +22,6 @@ import org.jetbrains.anko.toast
  * Description:
  */
 class ChatActivity : BaseActivity() ,ChatContract.View{
-
-
     override fun getLayoutId(): Int = R.layout.activity_chat
 
     lateinit var userName :String
@@ -50,6 +48,8 @@ class ChatActivity : BaseActivity() ,ChatContract.View{
         initRecyclerView()
         EMClient.getInstance().chatManager().addMessageListener(messageListener)
         send.setOnClickListener{send()}
+
+        presenter.loadMessages(userName)
     }
 
 
@@ -126,4 +126,8 @@ class ChatActivity : BaseActivity() ,ChatContract.View{
         EMClient.getInstance().chatManager().removeMessageListener(messageListener)
     }
 
+    override fun onMessageLoaded() {
+        recyclerView.adapter.notifyDataSetChanged()
+        scrollToBottom()
+    }
 }

@@ -4,6 +4,7 @@ import com.hyphenate.chat.EMClient
 import com.hyphenate.chat.EMMessage
 import com.wenping.autoloayout.ktim_project.adapter.EMCallBackAdapter
 import com.wenping.autoloayout.ktim_project.contract.ChatContract
+import org.jetbrains.anko.doAsync
 
 /**
  * @author WenPing
@@ -42,5 +43,16 @@ class ChatPresenter(val view:ChatContract.View) :ChatContract.ChatPresenter{
         //更新消息为已读;获取 和联系人的会话
         val conversation = EMClient.getInstance().chatManager().getConversation(userName)
         conversation.markAllMessagesAsRead()
+    }
+
+    override fun loadMessages(userName: String) {
+        doAsync {
+            val conversation = EMClient.getInstance()
+                    .chatManager().getConversation(userName)
+            messages.addAll(conversation.allMessages)
+            uiThread {
+                view.onMessageLoaded()
+            }
+        }
     }
 }
