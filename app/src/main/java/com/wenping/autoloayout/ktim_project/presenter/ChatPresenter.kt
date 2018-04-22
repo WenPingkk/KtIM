@@ -51,6 +51,8 @@ class ChatPresenter(val view: ChatContract.View) : ChatContract.ChatPresenter {
         doAsync {
             val conversation = EMClient.getInstance()
                     .chatManager().getConversation(userName)
+            //表示已读
+            conversation.markAllMessagesAsRead()
             messages.addAll(conversation.allMessages)
             uiThread {
                 view.onMessageLoaded()
