@@ -4,7 +4,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import com.hyphenate.chat.EMClient
+import com.hyphenate.chat.EMMessage
 import com.wenping.autoloayout.ktim_project.R
+import com.wenping.autoloayout.ktim_project.adapter.EMMessageListenerAdapter
 import com.wenping.autoloayout.ktim_project.adapter.MessageListAdapter
 import com.wenping.autoloayout.ktim_project.contract.ChatContract
 import com.wenping.autoloayout.ktim_project.presenter.ChatPresenter
@@ -27,6 +30,16 @@ class ChatActivity : BaseActivity() ,ChatContract.View{
 
     val presenter by lazy { ChatPresenter(this) }
 
+    val messageListener = object : EMMessageListenerAdapter() {
+        override fun onMessageReceived(p0: MutableList<EMMessage>?) {
+            presenter.addMessage(userName,p0)
+            runOnUiThread {
+                recyclerView.adapter.notifyDataSetChanged()
+            }
+        }
+
+    }
+
     override fun init() {
         super.init()
         initHeader()
@@ -34,7 +47,7 @@ class ChatActivity : BaseActivity() ,ChatContract.View{
         initEditText()
 
         initRecyclerView()
-
+        EMClient.getInstance().chatManager().addMessageListener(messageListener)
         send.setOnClickListener{send()}
     }
 
@@ -44,7 +57,6 @@ class ChatActivity : BaseActivity() ,ChatContract.View{
         recyclerView.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
-
             adapter = MessageListAdapter(context,presenter.messages)
 
         }
@@ -101,6 +113,11 @@ class ChatActivity : BaseActivity() ,ChatContract.View{
     override fun onSendMessageFailed() {
         toast(R.string.send_message_failed)
         recyclerView.adapter.notifyDataSetChanged()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EMClient.getInstance().chatManager().removeMessageListener(messageListener)
     }
 
 }

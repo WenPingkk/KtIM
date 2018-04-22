@@ -32,4 +32,15 @@ class ChatPresenter(val view:ChatContract.View) :ChatContract.ChatPresenter{
         view.onStartSendMessage()
         EMClient.getInstance().chatManager().sendMessage(emMessage)
     }
+
+    override fun addMessage(userName: String, p0: MutableList<EMMessage>?) {
+        //加入到当前的消息列表
+        //let 做非空检查
+        p0?.let {
+            messages.addAll(p0)
+        }
+        //更新消息为已读;获取 和联系人的会话
+        val conversation = EMClient.getInstance().chatManager().getConversation(userName)
+        conversation.markAllMessagesAsRead()
+    }
 }
