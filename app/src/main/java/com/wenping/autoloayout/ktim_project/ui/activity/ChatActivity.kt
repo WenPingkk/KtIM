@@ -3,10 +3,7 @@ package com.wenping.autoloayout.ktim_project.ui.activity
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.KeyEvent
 import android.view.View
-import android.widget.EditText
-import android.widget.TextView
 import com.wenping.autoloayout.ktim_project.R
 import com.wenping.autoloayout.ktim_project.adapter.MessageListAdapter
 import com.wenping.autoloayout.ktim_project.contract.ChatContract
@@ -48,7 +45,7 @@ class ChatActivity : BaseActivity() ,ChatContract.View{
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
 
-            adapter = MessageListAdapter(context,)
+            adapter = MessageListAdapter(context,presenter.messages)
 
         }
     }
