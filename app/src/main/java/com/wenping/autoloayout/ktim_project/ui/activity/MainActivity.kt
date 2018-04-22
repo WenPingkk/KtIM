@@ -24,7 +24,7 @@ class MainActivity : BaseActivity() {
             beginTransaction.replace(R.id.fragment_frame,FragmentFactory.instance.getFragment(it))
             beginTransaction.commit()
         }
-        
+
         EMClient.getInstance().chatManager().addMessageListener(messageListener)
 
     }
